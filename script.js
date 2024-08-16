@@ -109,7 +109,9 @@ defeatSound.preload = 'auto';
 // Function to play the sound effect
 function playSound(sound) {
     sound.currentTime = 0;
-    sound.play();
+    sound.play().catch(error => {
+        console.log("Error playing sound:", error);
+    });
 }
 
 // Initialize buttons with event listeners
