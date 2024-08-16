@@ -1,7 +1,7 @@
 // Initial game variables
 let xp = 0; // Player's experience points
 let health = 100; // Player's health
-let gold = 50;  // Player's gold
+let gold = 500;  // Player's gold
 let currentWeapon = 0; // Index of the current weapon
 let fighting; // Index of the monster currently being fought
 let monsterHealth; // Health of the current monster
@@ -36,13 +36,13 @@ const monsters = [
     },
     {
         name: "fanged beast",
-        level: 8,
+        level: 4,
         health: 60
     },
     {
         name: "dragon",
-        level: 20,
-        health: 300
+        level: 8,
+        health: 120
     }
 ]
 
@@ -98,10 +98,41 @@ const locations = [
     }
 ];
 
-// // Initialize buttons with event listeners
-button1.onclick = goStore;
-button2.onclick = goCave;
-button3.onclick = fightDragon;
+// Create a new Audio object for the sound effect
+const clickSound = new Audio('/Sounds/button-click.wav');
+const victorySound = new Audio('/Sounds/victory.wav');
+const defeatSound = new Audio('/Sounds/game-over.mp3')
+clickSound.preload = 'auto';
+victorySound.preload = 'auto';
+defeatSound.preload = 'auto';
+
+// Function to play the sound effect
+function playSound(sound) {
+    sound.currentTime = 0;
+    sound.play();
+}
+
+// Initialize buttons with event listeners
+button1.onclick = function () {
+    if (!gameOver) {
+        playSound(clickSound);
+        goStore();
+    }
+}
+button2.onclick = function () {
+    if (!gameOver) {
+        playSound(clickSound);
+        goCave();
+    }
+}
+button3.onclick = function () {
+    if (!gameOver) {
+        playSound(clickSound);
+        fightDragon();
+    }
+}
+
+let gameOver = false; // Flag to indicate the game has ended
 
 // Function to update the UI based on the current location
 function update(location) {
@@ -109,9 +140,18 @@ function update(location) {
     button1.innerText = location["button text"][0];
     button2.innerText = location["button text"][1];
     button3.innerText = location["button text"][2];
-    button1.onclick = location["button functions"][0];
-    button2.onclick = location["button functions"][1];
-    button3.onclick = location["button functions"][2];
+    button1.onclick = function () {
+        playSound(clickSound)
+        location["button functions"][0]();
+    };
+    button2.onclick = function () {
+        playSound(clickSound)
+        location["button functions"][1]();
+    };
+    button3.onclick = function () {
+        playSound(clickSound)
+        location["button functions"][2]();
+    };
     text.innerHTML = location.text;
 }
 
@@ -131,12 +171,16 @@ function goCave() {
 
 // Function to buy health
 function buyHealth() {
-    if (gold >= 10) {
+    if (gold >= 10 && health <= 90) {
         gold -= 10;
-        health += 10;
+        health += 10; // maxhealth = 100
         goldText.innerText = gold;
         healthText.innerText = health;
-    } else {
+    } 
+    else if(health > 90) {
+        text.innerText = "You have health more than 90!"
+    } 
+    else {
         text.innerText = "You do not have enough gold to buy health.";
     }
 }
@@ -158,7 +202,10 @@ function buyWeapon() {
     } else {
         text.innerText = "You already have the most powerful weapon!";
         button2.innerText = "Sell weapon for 15 gold";
-        button2.onclick = sellWeapon;
+        button2.onclick = function () {
+            playSound(clickSound);
+            sellWeapon();
+        };
     }
 }
 
@@ -216,7 +263,7 @@ function attack() {
     }
     healthText.innerText = health;
     monsterHealthText.innerText = monsterHealth;
-    if (health <= 0) {
+    if (health === 0) {
         lose();
     } else if (monsterHealth <= 0) {
         if (fighting === 2) {
@@ -259,19 +306,24 @@ function defeatMonster() {
 
 // Function to handle losing the game
 function lose() {
+    gameOver = true;
+    playSound(defeatSound);
     update(locations[5]);
 }
 
 // Function to handle winning the game
 function winGame() {
+    gameOver = true;
+    playSound(victorySound); // always a good practice to play the sound first
     update(locations[6]);
 }
 
 // Function to restart the game
 function restart() {
+    gameOver = false;
     xp = 0;
     health = 100;
-    gold = 50;
+    gold = 500;
     currentWeapon = 0;
     inventory = ["stick"];
     goldText.innerText = gold;
@@ -317,7 +369,7 @@ function checkPick(guess) {
         health = Math.max(health, 0);
 
         healthText.innerText = health;
-        if (health <= 0) {
+        if (health === 0) {
             lose();
         }
     }
