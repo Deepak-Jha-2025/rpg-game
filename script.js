@@ -205,6 +205,10 @@ function attack() {
     text.innerText = "The " + monsters[fighting].name + " attacks.";
     text.innerText += " You attack it with your " + weapons[currentWeapon].name + ".";
     health -= getMonsterAttackValue(monsters[fighting].level);
+
+    // Ensure health does not go below 0
+    health = Math.max(health, 0);
+
     if (isMonsterHit()) {
         monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
     } else {
@@ -308,6 +312,10 @@ function checkPick(guess) {
     } else {
         text.innerText += "Wrong! You lose 10 health!";
         health -= 10;
+
+        // Ensure health does not go below 0
+        health = Math.max(health, 0);
+
         healthText.innerText = health;
         if (health <= 0) {
             lose();
