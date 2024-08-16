@@ -1,39 +1,78 @@
+/* Importing a custom font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 body {
     background-color: #0a0a23;
+    font-family: 'Roboto', sans-serif; /* Use custom font */
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
+/* Keyframes for animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Text Box */
 #text {
-    background-color: #0a0a23;
+    background-color: #2a2a5c;
     color: #ffffff;
-    padding: 10px;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 1.15em; /* Slightly larger text for better readability */
+    line-height: 1.5; /* Improved line spacing */
+    animation: fadeIn 2.5s ease-out; /* Fade-in animation with 1 second duration */
 }
 
+/* Game Box */
 #game {
-    max-width: 500px;
-    max-height: 400px;
-    background-color: #ffffff;
+    max-width: 600px;
+    background-color: #1a1a3c;
     color: #ffffff;
-    margin: 30px auto 0px;
-    padding: 10px;
+    /* margin: 30px auto; */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
+    position: relative;
+    overflow: hidden;
 }
 
 #controls,
 #stats {
-    border: 1px solid #0a0a23;
-    padding: 5px;
-    color: #0a0a23;
+    border: 1px solid #3a3a6c;
+    padding: 15px;
+    color: #ffffff;
+    background-color: #2a2a5c;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content:space-between ;
+    align-items: center;
 }
 
+/* Monster Stats */
 #monsterStats {
     display: none;
-    border: 1px solid #0a0a23;
-    padding: 5px;
+    border: 1px solid #c70d0d;
+    padding: 15px;
     color: #ffffff;
-    background-color: #c70d0d;
+    background-color: #b71c1c;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .stat {
-    padding-right: 10px;
+    padding-right: 20px;
+    font-weight: bold;
+    font-size: 1.2em; /* Larger font for stats */
 }
 
 button {
@@ -42,4 +81,17 @@ button {
     background-color: #feac32;
     background-image: linear-gradient(#fecc4c, #ffac33);
     border: 3px solid #feac32;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin: 5px;
+    font-weight: bold;
+    font-size: 1.15em; /* Larger font for buttons */
+    box-shadow: 0px 4px 0px #d18f29;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-image: linear-gradient(#ffb94a, #feac32);
+    box-shadow: 0px 3px 0px #d18f29;
+    transform: translateY(2px);
 }
