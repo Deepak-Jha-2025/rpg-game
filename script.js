@@ -99,9 +99,9 @@ const locations = [
 ];
 
 // Create a new Audio object for the sound effect
-const clickSound = new Audio('/Sounds/button-click.wav');
-const victorySound = new Audio('/Sounds/victory.wav');
-const defeatSound = new Audio('/Sounds/game-over.mp3')
+const clickSound = new Audio('https://deepak-jha-2025.github.io/rpg-game/Sounds/button-click.wav');
+const victorySound = new Audio('https://deepak-jha-2025.github.io/rpg-game/Sounds/victory.wav');
+const defeatSound = new Audio('https://deepak-jha-2025.github.io/rpg-game/Sounds/game-over.mp3')
 clickSound.preload = 'auto';
 victorySound.preload = 'auto';
 defeatSound.preload = 'auto';
